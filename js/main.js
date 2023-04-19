@@ -1,3 +1,5 @@
+// FUTURE UPDATES: Use Usplash for real images instead of randomuser.me
+// https://unsplash.com/developers
 document.querySelectorAll('.decision').forEach(button => button.addEventListener('click', scoreGuess))
 document.querySelectorAll('.decision').forEach(button => button.addEventListener('click', getImage))
 document.querySelector('.resetScore').addEventListener('click', resetScore)
@@ -22,11 +24,13 @@ function randomizeOption(){
 function getImage(){
   const urls = {
     real: 'https://www.randomuser.me/api/?inc=picture',
-    fake: 'https://fakeface.rest/face/json',
+    fake: `https://boredhumans.com/faces2/${Math.floor(Math.random() * 994) + 1}.jpg`,
   }
   randomizeOption()
-  const url = urls[option]
-  fetch(url)
+  // set variable for image
+  const img = document.querySelector('#question')
+  if(option === 'real'){
+    fetch(urls[option])
       .then(res => res.json()) // parse response as JSON
       .then(data => {
         let picUrl
@@ -36,14 +40,16 @@ function getImage(){
           console.log(data)
           picUrl = data.image_url
         }
-        // set variable for image
-        const img = document.querySelector('#question')
         img.src = picUrl
         // set image to the random photo
       })
       .catch(err => {
           console.log(`error ${err}`)
       });
+  }
+  if(option === 'fake'){
+    img.src = urls[option]
+  }
 }
 function scoreGuess(event){
   const rightCount = document.querySelector('.rightCount')
