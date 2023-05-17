@@ -17,6 +17,7 @@ img, iframe{
   display: block;
   margin: 0 auto;
   height: 200px;
+  width: 200px;
 }
 .hidden{
   display: none;
